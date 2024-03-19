@@ -1,11 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import DispatchContext from "../context/DispatchContext";
 
-interface IProps {
-  setLoggedIn: (loggedIn: boolean) => void;
-}
-
-export default function HeaderLoggedOut({ setLoggedIn }: IProps) {
+export default function HeaderLoggedOut() {
+  const appDispatch = useContext(DispatchContext);
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -26,10 +24,7 @@ export default function HeaderLoggedOut({ setLoggedIn }: IProps) {
       const response = await axios.post("/login", user);
       console.log(response.data);
       if (response.data) {
-        setLoggedIn(true);
-        localStorage.setItem("social-app-token", response.data.token);
-        localStorage.setItem("social-app-avatar", response.data.avatar);
-        localStorage.setItem("social-app-username", response.data.username);
+        appDispatch({ type: "LOG_IN", payload: response.data });
       } else {
         console.log("Invalid credentials");
       }

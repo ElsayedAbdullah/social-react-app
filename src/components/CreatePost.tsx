@@ -1,13 +1,14 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import Page from "./Page";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DispatchContext from "../context/DispatchContext";
+import StateContext from "../context/StateContext";
 
-interface IProps {
-  addFlashMessage: (message: string) => void;
-}
+export default function CreatePost() {
+  const appDispatch = useContext(DispatchContext);
+  const { user } = useContext(StateContext);
 
-export default function CreatePost({ addFlashMessage }: IProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
@@ -19,11 +20,14 @@ export default function CreatePost({ addFlashMessage }: IProps) {
       const response = await axios.post("/create-post", {
         title: inputRef.current?.value,
         body: textareaRef.current?.value,
-        token: localStorage.getItem("social-app-token"),
+        token: user?.token,
       });
 
+      appDispatch({
+        type: "FLASH_MESSAGE",
+        payload: "Congrats. Your post was created.",
+      });
       navigate(`/post/${response.data}`);
-      addFlashMessage("Post created successfully");
     } catch (error) {
       console.log(error);
     }

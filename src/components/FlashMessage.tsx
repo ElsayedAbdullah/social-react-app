@@ -1,15 +1,18 @@
 interface IProps {
-  flashMessage: string;
+  flashMessages: string[];
 }
 
-export default function FlashMessage({ flashMessage }: IProps) {
+export default function FlashMessage({ flashMessages }: IProps) {
   return (
     <div className="floating-alerts">
-      {flashMessage && (
-        <div className="alert alert-success text-center floating-alert shadow-sm">
-          {flashMessage}
+      {flashMessages.map((message, index) => (
+        <div
+          key={index}
+          className="alert alert-success text-center floating-alert shadow-sm"
+        >
+          {message}
         </div>
-      )}
+      ))}
     </div>
   );
 }

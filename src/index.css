@@ -533,7 +533,7 @@ textarea.tall-textarea {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  background-color: #989696;
   opacity: 0;
 }
 
@@ -582,4 +582,9 @@ textarea.tall-textarea {
   60% {
     opacity: 1;
   }
+}
+
+.list-group-item:first-child {
+  border-radius: 0;
+  border-top: 0;
 }

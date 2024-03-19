@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import HeaderLoggedOut from "./HeaderLoggedOut";
 import HeaderLoggedIn from "./HeaderLoggedIn";
+import { useContext } from "react";
+import StateContext from "../context/StateContext";
 
-interface IProps {
-  loggedIn: boolean;
-  setLoggedIn: (loggedIn: boolean) => void;
-}
-
-export default function Header({ loggedIn, setLoggedIn }: IProps) {
+export default function Header() {
+  const { loggedIn } = useContext(StateContext);
   return (
     <header className="header-bar bg-primary mb-3">
       <div className="container d-flex flex-column flex-md-row align-items-center p-3">
@@ -16,11 +14,7 @@ export default function Header({ loggedIn, setLoggedIn }: IProps) {
             Social App
           </Link>
         </h4>
-        {loggedIn ? (
-          <HeaderLoggedIn setLoggedIn={setLoggedIn} />
-        ) : (
-          <HeaderLoggedOut setLoggedIn={setLoggedIn} />
-        )}
+        {loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
       </div>
     </header>
   );
